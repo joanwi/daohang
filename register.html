@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>daohang</title>
+    <link rel="icon" href="./favicon.ico">
+    <link rel="apple-touch-icon" href="./logo192.png">
+    <meta name="theme-color" content="rgb(0 122 255)">
+    <link rel="manifest" href="./manifest.json">
+    <meta name="description" content="daohang" />
+    <meta name="keywords" content="" />
+    <meta property="og:title" content="daohang" />
+    <meta property="og:image" content="" />
+    <meta property="og:description" content="daohang" />
+    <!-- Require stylesheet load from local -->
+    <!-- <link href="./dist/css/tailwind.min.css" rel="stylesheet"> -->
+    <!-- <link href="./dist/css/fontawesome-all.min.css" rel="stylesheet"> -->
+    <!-- Required stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="./dist/css/style.css" rel="stylesheet" />
+</head>
+<body>
+    <form id="registerForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <button type="submit">Register</button>
+    </form>
+      <script>
+      document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const userData = {
+          username: document.getElementById('username').value,
+          password: document.getElementById('password').value,
+          email: document.getElementById('email').value
+        };
+        fetch('/api/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data); // 处理响应数据
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      });
+      </script>
+
+    
+<!-- 后端代码 -->
+<!-- const express = require('express');
+const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
+const app = express();
+app.use(bodyParser.json());
+
+app.post('/api/register', async (req, res) => {
+  const { username, password, email } = req.body;
+  // 进行数据验证...
+  const hashedPassword = await bcrypt.hash(password, 10);
+  // 存储用户到数据库...
+  // 假设使用某种数据库操作
+  res.status(201).send({ message: 'User registered successfully!' });
+});
+
+app.listen(3000, () => console.log('Server running on port 3000')); -->
+</body>
+</html>
